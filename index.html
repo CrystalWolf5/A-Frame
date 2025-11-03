@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sala de Museo Virtual</title>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-plane
+        position="0 0 0"
+        rotation="-90 0 0"
+        width="10"
+        height="10"
+        material="src: ./images/wood_floor.jpg"
+        repeat="2 2"
+      ></a-plane>
+      <a-box
+        position="0 1.5 -5"
+        width="10"
+        height="3"
+        depth="1"
+        material="src: ./images/painted_wall.jpg; repeat: 10 3"
+      ></a-box>
+      <a-box
+        position="0 1.5 5"
+        width="10"
+        height="3"
+        depth="1"
+        material="src: ./images/painted_wall.jpg; repeat: 10 3"
+      ></a-box>
+      <a-box
+        position="5 1.5 0"
+        width="0.3"
+        height="3"
+        depth="10"
+        material="src: ./images/painted_wall.jpg; repeat: 10 3"
+      ></a-box>
+      <a-box
+        position="-5 1.5 0"
+        width="0.3"
+        height="3"
+        depth="10"
+        material="src: ./images/painted_wall.jpg; repeat: 10 3"
+      ></a-box>
+      <a-sky color="#ECECEC"></a-sky>
+      <a-image
+        position="0 1.5 -4.45"
+        src="./images/mona.jpg"
+        width="1.5"
+        height="2"
+      ></a-image>
+      <a-assets>
+        <a-asset-item
+          id="discobolus"
+          src="./discobolus/scene.gltf"
+        ></a-asset-item>
+      </a-assets>
+      <a-entity
+        position="-2 1 -2"
+        scale="0.08 0.08 0.08"
+        gltf-model="#discobolus"
+      ></a-entity>
+    </a-scene>
+  </body>
+</html>
