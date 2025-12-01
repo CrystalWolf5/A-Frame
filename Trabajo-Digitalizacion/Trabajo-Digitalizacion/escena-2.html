@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>escena 2</title>
+    <!--museo interactivo con modelos Pokémon-->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+</head>
+<body>
+    <a-scene>
+        <a-assets>
+            <a-asset-item id="empoleon" src="assets/models/pikachu.glb"></a-asset-item>
+        </a-assets>
+
+        <!-- Suelo -->
+        <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#e0e0e0"></a-plane>
+
+        <!-- Pared trasera -->
+        <a-box position="0 2 -10" width="20" height="4" depth="0.5" color="#cccccc"></a-box>
+        <!-- Pared delantera -->
+        <a-box position="0 2 10" width="20" height="4" depth="0.5" color="#cccccc"></a-box>
+        <!-- Pared izquierda -->
+        <a-box position="-10 2 0" width="0.5" height="4" depth="20" color="#cccccc"></a-box>
+        <!-- Pared derecha -->
+        <a-box position="10 2 0" width="0.5" height="4" depth="20" color="#cccccc"></a-box>
+
+        <!-- Modelo Pokémon -->
+        <a-gltf-model src="#empoleon" position="0 0 -3" scale="0.5 0.5 0.5" class="pokemon"></a-gltf-model>
+
+        <!-- Texto oculto que aparece al hacer clic -->
+        <a-text id="pokedex" value="Empoleon: Pokémon tipo agua. Si alguien hiere su orgullo, lo desgarra con sus alas, capaces de cortar incluso témpanos de hielo."
+                position="0 2 -3" visible="false"></a-text>
+
+        <script>
+            document.querySelector('.pokemon').addEventListener('click', () => {
+                document.querySelector('#pokedex').setAttribute('visible', true);
+            });
+        </script>
+
+        <!-- Portal al combate -->
+        <a-sphere 
+            class="clickable"
+            color="lightblue" 
+            position="4 2 -4"
+            id="portal"
+            scale="0.7 0.7 0.7">
+        </a-sphere>
+        <a-text value="COMBATE" color="black" position="3.4 3 -4"></a-text>
+    </a-scene>
+
+    <script>
+        document.querySelector('#portal').addEventListener('click', function () {
+            window.location.href = 'escena-3.html';
+        });
+    </script>
+</body>
+</html>
