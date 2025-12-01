@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>escena 3</title>
+    <!--mini-combate jugable-->
+</head>
+<body>
+<a-scene>
+<a-assets>
+    <a-asset-item id="charmander" src="assets/models/charmander.glb"></a-asset-item>
+    <a-asset-item id="squirtle" src="assets/models/squirtle.glb"></a-asset-item>
+    <a-asset-item id="bulbasaur" src="assets/models/bulbasaur.glb"></a-asset-item>
+</a-assets>
+
+<a-sky color="#ECECEC"></a-sky>
+
+<!-- Texto de vida -->
+<a-text id="vida" value="Vida: 100" position="0 2 -3"></a-text>
+
+<!-- Aquí aparecerá el Pokémon elegido -->
+<a-entity id="pokemon"></a-entity>
+
+<!-- Botón de ataque -->
+<a-box color="orange" position="0 1 -3" id="ataque"></a-box>
+<a-text value="Lanzar ataque" position="0 1.8 -3" ></a-text>
+
+<script>
+    // Recuperar elección
+    const elegido = localStorage.getItem('pokemonElegido');
+    const contenedor = document.querySelector('#pokemon');
+
+    if (elegido === 'chimchar') {
+    contenedor.setAttribute('gltf-model', '#chimchar');
+    contenedor.setAttribute('position', '0 0 -3');
+    } else if (elegido === 'piplup') {
+    contenedor.setAttribute('gltf-model', '#piplup');
+    contenedor.setAttribute('position', '0 0 -3');
+    } else if (elegido === 'turtwig') {
+    contenedor.setAttribute('gltf-model', '#turtwig');
+    contenedor.setAttribute('position', '0 0 -3');
+    }
+
+    // Sistema de vida
+    let vida = 100;
+    document.querySelector('#ataque').addEventListener('click', () => {
+    vida -= 20;
+    document.querySelector('#vida').setAttribute('value', 'Vida: ' + vida);
+    });
+</script>
+</a-scene>
+</body>
+</html>
