@@ -21,17 +21,12 @@
       <a-entity webxr-input-profiles></a-entity>
 
 <a-entity id="rig" position="1.5 2 2">
-    <a-entity camera>
-
-    <a-entity laser-controls="hand: left"
-              raycaster="objects: .clickable"
-              cursor="fuse: false" position="0.3 -0.3 -0.6"></a-entity>
-
-    <a-entity laser-controls="hand: right"
-              raycaster="objects: .clickable"
-              cursor="fuse: false" position="0.3 -0.3 -0.6"></a-entity>
-  </a-entity>
-    </a-entity>
+  <a-camera id="camera" look-controls wasd-controls="acceleration: 10">
+    <!-- Mandos dentro de la cámara -->
+    <a-entity laser-controls="hand: left" position="-0.2 -0.3 -0.6" raycaster="objects: .clickable" cursor="fuse: false"></a-entity>
+    <a-entity laser-controls="hand: right" position="0.2 -0.3 -0.6" raycaster="objects: .clickable" cursor="fuse: false"></a-entity>
+  </a-camera>
+</a-entity>
 
 <!-- 🎵 Archivo de sonido -->
 <audio id="bgMusic" src="assets/sounds/Pokemon Ruby_Sapphire_Emerald- Littleroot Town [im6tbN9SZXs].mp3" preload="auto"></audio>
@@ -203,6 +198,7 @@ document.querySelector('#ball3').addEventListener('click', () => {
 </a-scene>
 
 </html>
+
 
 
 
