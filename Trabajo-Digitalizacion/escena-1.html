@@ -8,7 +8,7 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 </head>
 <body>
-<a-scene shadow="type: pcfsoft">
+<a-scene xr-mode-ui="enabled: true" webxr="optionalFeatures: [ 'local-floor', 'bounded-floor', 'hand-tracking', 'layers' ]" shadow="type: pcfsoft">
 <a-entity id="player" camera position="1.5 2 2" shadow>
 </a-entity>
 <a-assets>
@@ -17,6 +17,20 @@
     <a-asset-item id="piplup" src="assets/models/piplup/scene.gltf"></a-asset-item>
     <a-asset-item id="turtwig" src="assets/models/turtwig/scene.gltf"></a-asset-item>
 </a-assets>
+
+      <a-entity webxr-input-profiles></a-entity>
+
+  <a-entity id="rig" position="0 1.6 8">
+    <a-entity camera></a-entity>
+
+    <a-entity laser-controls="hand: left"
+              raycaster="objects: .clickable"
+              cursor="fuse: false"></a-entity>
+
+    <a-entity laser-controls="hand: right"
+              raycaster="objects: .clickable"
+              cursor="fuse: false"></a-entity>
+  </a-entity>
 
 <!-- 🎵 Archivo de sonido -->
 <audio id="bgMusic" src="assets/sounds/Pokemon Ruby_Sapphire_Emerald- Littleroot Town [im6tbN9SZXs].mp3" preload="auto"></audio>
@@ -189,4 +203,5 @@ document.querySelector('#ball3').addEventListener('click', () => {
 
     
 </a-scene>
+
 </html>
