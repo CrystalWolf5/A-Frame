@@ -35,11 +35,11 @@
               cursor="fuse: false"></a-entity>
   </a-entity>
 
-    <audio id="bgMusic" src="assets/sounds/combate.mp3" preload="auto"></audio>
-   <a-entity sound="src: url(./assets/sounds/combate.mp3); autoplay: true; loop: true; volume: 0.5"></a-entity>
+    <audio id="Combate" src="assets/sounds/combate.mp3" preload="auto"></audio>
+   <a-entity sound="src: url(./assets/sounds/combate.mp3); autoplay: true; loop: true; volume: 0.8"></a-entity>
 
-  <audio id="Victoria" src="assets/sounds/Pokemon Ruby_Sapphire_Emerald- Littleroot Town [im6tbN9SZXs].mp3" preload="auto"></audio>
-   <a-entity sound="src: url(./assets/sounds/combate.mp3); autoplay: true; loop: true; volume: 0.5"></a-entity>
+  <audio id="Victoria" src="assets/sounds/victoria.mp3" preload="auto"></audio>
+   <a-entity sound="src: url(./assets/sounds/victoria.mp3); autoplay: true; loop: true; volume: 0.8"></a-entity>
 
   <a-sky color="#ECECEC"></a-sky>
   <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#e0e0e0"></a-plane>
@@ -154,6 +154,13 @@ if (elegido === "turtwig") {
 
       if (vidaEnemigo === 0) {
         document.querySelector('#mensaje').setAttribute('value', '¡El pokemon enemigo se ha debilitado!');
+          // ✅ Detener música de combate
+      const combate = document.querySelector('#Combate');
+      combate.components.sound.stopSound();
+
+  // ✅ Reproducir música de victoria
+      const victoria = document.querySelector('#Victoria');
+      victoria.components.sound.playSound();
       } else {
         setTimeout(ataqueEnemigo, 1000);
       }
@@ -202,5 +209,6 @@ document.querySelector('#ataque2').addEventListener('click', () => {
 </body>
 
 </html>
+
 
 
