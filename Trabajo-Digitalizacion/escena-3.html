@@ -20,19 +20,24 @@
     <a-asset-item id="pikachu" src="assets/models/pikachu/scene.gltf"></a-asset-item>
   </a-assets>
 
-  <a-entity id="rig" position="0 1.6 8">
+<a-entity id="rig" position="0 1.6 8">
 
-    <!-- Cámara VR -->
-    <a-entity camera
-              cursor="rayOrigin: controller"
-              raycaster="objects: .clickable">
-    </a-entity>
+  <!-- Cámara VR -->
+  <a-entity camera></a-entity>
 
-    <!-- ✅ Mandos VR (correcto) -->
-    <a-entity laser-controls="hand: left"></a-entity>
-    <a-entity laser-controls="hand: right"></a-entity>
-
+  <!-- Mandos VR con raycaster y cursor -->
+  <a-entity laser-controls="hand: left"
+            raycaster="objects: .clickable"
+            cursor="fuse: false">
   </a-entity>
+
+  <a-entity laser-controls="hand: right"
+            raycaster="objects: .clickable"
+            cursor="fuse: false">
+  </a-entity>
+
+</a-entity>
+
 
 
 
@@ -197,6 +202,7 @@ document.querySelector('#ataque2').addEventListener('click', () => {
 </body>
 
 </html>
+
 
 
 
