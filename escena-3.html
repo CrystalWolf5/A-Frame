@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>escena 3</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+</head>
+<body>
+<a-scene>
+  <a-assets>
+    <!-- Compañeros -->
+    <a-asset-item id="chimchar" src="assets/models/chimchar/scene.gltf"></a-asset-item>
+    <a-asset-item id="piplup" src="assets/models/piplup/scene.gltf"></a-asset-item>
+    <a-asset-item id="turtwig" src="assets/models/turtwig/scene.gltf"></a-asset-item>
+    <!-- Enemigos -->
+    <a-asset-item id="fennekin" src="assets/models/fennekin/scene.gltf"></a-asset-item>
+    <a-asset-item id="gyarados" src="assets/models/gyarados/scene.gltf"></a-asset-item>
+    <a-asset-item id="litwick" src="assets/models/litwick/scene.gltf"></a-asset-item>
+    <a-asset-item id="pikachu" src="assets/models/pikachu/scene.gltf"></a-asset-item>
+  </a-assets>
+
+
+    <!-- MANDOS VR INTEGRADOS -->
+  <a-entity laser-controls="hand: left"></a-entity>
+  <a-entity laser-controls="hand: right"></a-entity>
+  <a-entity cursor="rayOrigin: controller"></a-entity>
+
+  <!-- Cámara -->
+<a-entity id="rig" position="0 1.6 8"
+          camera
+          look-controls
+          cursor="rayOrigin: mouse"
+          raycaster="objects: .clickable">
+</a-entity>
+
+
+  <a-sky color="#ECECEC"></a-sky>
+  <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#e0e0e0"></a-plane>
+
+  <!-- Mensaje -->
+  <a-text id="mensaje" value="" position="0 4 -2" aling="center" color="black"></a-text>
+
+  <!-- Barras de vida -->
+  <a-plane id="vidaJugador" position="-2 3 5" width="2" height="0.3" color="green"></a-plane>
+  <a-plane id="vidaEnemigo" position="2 3 -4" width="2" height="0.3" color="red"></a-plane>
+
+  <!-- Pokémon -->
+  <a-entity id="pokemon"></a-entity>
+  <a-entity id="enemigo"></a-entity>
+
+  <!-- Botón inicial "Atacar" -->
+  <a-box id="btnAtacar" class="clickable" color="blue" position="2 1 4" depth="0.2" height="0.5" width="1"></a-box>
+  <a-text id="txtAtacar" value="Atacar" position="1.7 1 4.1" aling="center"></a-text>
+
+  <!-- Botones de ataque (ocultos al inicio) -->
+  <a-box id="ataque1" class="clickable" color="orange" position="2 2 4" depth="0.2" height="0.5" width="1" visible="false"></a-box>
+  <a-text id="txtAtaque1" value="Ataque 1" position="1.57 2 4.1" aling="center" visible="false"></a-text>
+
+  <a-box id="ataque2" class="clickable" color="yellow" 
+       position="2 0.5 4" depth="0.2" height="0.5" width="1" visible="false"></a-box>
+<a-text id="txtAtaque2" value="Ataque 2" 
+        position="2 0.5 4.1" align="center" visible="false"></a-text>
+
+  <script>
+    // Recuperar elección
+    const elegido = (localStorage.getItem('pokemonElegido') || '').toLowerCase();
+    const contenedor = document.querySelector('#pokemon');
+
+    if (elegido === 'chimchar') {
+      contenedor.setAttribute('gltf-model', '#chimchar');
+      contenedor.setAttribute('position', '0 0 5');
+      contenedor.setAttribute('scale', '0.3 0.3 0.3');
+      contenedor.setAttribute('rotation', '0 180 0');
+    } else if (elegido === 'piplup') {
+      contenedor.setAttribute('gltf-model', '#piplup');
+      contenedor.setAttribute('position', '0 0 5');
+      contenedor.setAttribute('scale', '0.3 0.3 0.3');
+      contenedor.setAttribute('rotation', '0 180 0');
+    } else if (elegido === 'turtwig') {
+      contenedor.setAttribute('gltf-model', '#turtwig');
+      contenedor.setAttribute('position', '0 0 5');
+      contenedor.setAttribute('scale', '0.3 0.3 0.3');
+      contenedor.setAttribute('rotation', '0 180 0');
+    }
+
+    // Ataques según el Pokémon elegido
+let ataque1Nombre = "";
+let ataque2Nombre = "";
+
+if (elegido === "chimchar") {
+  ataque1Nombre = "Lanzallamas";
+  ataque2Nombre = "Ascuas";
+}
+
+if (elegido === "piplup") {
+  ataque1Nombre = "Picotazo";
+  ataque2Nombre = "Pistola Agua";
+}
+
+if (elegido === "turtwig") {
+  ataque1Nombre = "Placaje";
+  ataque2Nombre = "Hoja Afilada";
+}
+
+
+    // Lista de enemigos
+    const enemigos = [
+      { id: "#pikachu", scale: '0.03 0.03 0.03', rotation: '0 0 0', position: '0 0 -5'},
+      { id: "#litwick", scale: '0.3 0.3 0.3', rotation: '0 0 0', position: '0 0 -5'},
+      { id: "#gyarados", scale: '0.7 0.7 0.7', rotation: '0 90 0', position: '0 2 -5'},
+      { id: "#fennekin", scale: '0.9 0.9 0.9', rotation: '0 0 0', position: '0 0 -5'}
+    ];
+    const enemigoElegido = enemigos[Math.floor(Math.random() * enemigos.length)];
+    const enemigo = document.querySelector('#enemigo');
+    enemigo.setAttribute('gltf-model', enemigoElegido.id);
+    enemigo.setAttribute('position', enemigoElegido.position);
+    enemigo.setAttribute('scale', enemigoElegido.scale);
+    enemigo.setAttribute('rotation', enemigoElegido.rotation);
+
+    // Sistema de vida
+    let vidaJugador = 100;
+    let vidaEnemigo = 100;
+
+    function actualizarBarra(id, vida) {
+      const barra = document.querySelector(id);
+      const anchoMax = 2;
+      const anchoActual = (vida / 100) * anchoMax;
+      barra.setAttribute('width', anchoActual);
+
+      if (id === '#vidaJugador') {
+        barra.setAttribute('position', `${-2 - (anchoMax - anchoActual) / 2} 3 -4`);
+      } else {
+        barra.setAttribute('position', `${2 - (anchoMax - anchoActual) / 2} 3 -4`);
+      }
+
+      if (vida > 60) barra.setAttribute('color', 'green');
+      else if (vida > 30) barra.setAttribute('color', 'yellow');
+      else barra.setAttribute('color', 'red');
+    }
+
+    function ataqueJugador(dano) {
+      if (vidaEnemigo === 0) return;
+
+      vidaEnemigo -= dano;
+      if (vidaEnemigo < 0) vidaEnemigo = 0;
+      actualizarBarra('#vidaEnemigo', vidaEnemigo);
+
+      if (vidaEnemigo === 0) {
+        document.querySelector('#mensaje').setAttribute('value', '¡Has ganado!');
+      } else {
+        setTimeout(ataqueEnemigo, 1000);
+      }
+    }
+
+    function ataqueEnemigo() {
+      const dano = Math.floor(Math.random() * 20) + 10;
+      document.querySelector('#mensaje').setAttribute('value', '¡El enemigo te atacó e hizo ' + dano + ' de daño!');
+      vidaJugador -= dano;
+      if (vidaJugador < 0) vidaJugador = 0;
+      actualizarBarra('#vidaJugador', vidaJugador);
+
+      if (vidaJugador === 0) {
+        document.querySelector('#mensaje').setAttribute('value', 'Has perdido...');
+      }
+    }
+
+    // Inicializar barras
+    actualizarBarra('#vidaJugador', vidaJugador);
+    actualizarBarra('#vidaEnemigo', vidaEnemigo);
+
+    // Mostrar botones de ataque al pulsar "Atacar"
+    // Mostrar botones de ataque al pulsar "Atacar"
+document.querySelector('#btnAtacar').addEventListener('click', () => {
+  document.querySelector('#btnAtacar').setAttribute('visible', 'false');
+  document.querySelector('#txtAtacar').setAttribute('visible', 'false'); // ocultar texto también
+
+document.querySelector('#ataque1').addEventListener('click', () => {
+  document.querySelector('#mensaje').setAttribute('value', '¡Usaste ' + ataque1Nombre + '!');
+  ataqueJugador(20);
+});
+
+document.querySelector('#ataque2').addEventListener('click', () => {
+  document.querySelector('#mensaje').setAttribute('value', '¡Usaste ' + ataque2Nombre + '!');
+  ataqueJugador(30);
+});
+
+
+  document.querySelector('#ataque1').setAttribute('visible', 'true');
+  document.querySelector('#txtAtaque1').setAttribute('visible', 'true');
+  document.querySelector('#ataque2').setAttribute('visible', 'true');
+  document.querySelector('#txtAtaque2').setAttribute('visible', 'true');
+});
+  </script>
+</a-scene>
+</body>
+</html>
