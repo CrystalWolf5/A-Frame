@@ -35,13 +35,6 @@
               cursor="fuse: false"></a-entity>
   </a-entity>
 
-   <a-entity id="Combate"
-          sound="src: url(./assets/sounds/combate.mp3); autoplay: true; loop: true; volume: 1.5">
-</a-entity>
-
-<a-entity id="Victoria"
-          sound="src: url(./assets/sounds/victoria.mp3); autoplay: false; loop: false; volume: 1.5">
-</a-entity>
 
   <a-sky color="#ECECEC"></a-sky>
   <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#e0e0e0"></a-plane>
@@ -155,26 +148,21 @@ if (elegido === "turtwig") {
       actualizarBarra('#vidaEnemigo', vidaEnemigo);
 
       if (vidaEnemigo === 0) {
-        document.querySelector('#mensaje').setAttribute('value', '¡El pokemon enemigo se ha debilitado!');
-
-      // ✅ Detener música de combate
-      const combate = document.querySelector('#Combate');
-      combate.components.sound.stopSound();
-
-  // ✅ Reproducir música de victoria
-      const victoria = document.querySelector('#Victoria');
-      victoria.components.sound.playSound();
+        document.querySelector('#mensaje').setAttribute('value', '¡Has ganado!');
+      } else {
+        setTimeout(ataqueEnemigo, 1000);
+      }
     }
 
     function ataqueEnemigo() {
       const dano = Math.floor(Math.random() * 20) + 10;
-      document.querySelector('#mensaje').setAttribute('value', '¡El pokemon enemigo ataca');
+      document.querySelector('#mensaje').setAttribute('value', '¡El enemigo te atacó e hizo ' + dano + ' de daño!');
       vidaJugador -= dano;
       if (vidaJugador < 0) vidaJugador = 0;
       actualizarBarra('#vidaJugador', vidaJugador);
 
       if (vidaJugador === 0) {
-        document.querySelector('#mensaje').setAttribute('value', elegido.charAt(0).toUpperCase() + elegido.slice(1) + ' se ha debilitado...');
+        document.querySelector('#mensaje').setAttribute('value', 'Has perdido...');
       }
     }
 
@@ -207,12 +195,4 @@ document.querySelector('#ataque2').addEventListener('click', () => {
   </script>
 </a-scene>
 </body>
-
 </html>
-
-
-
-
-
-
-
