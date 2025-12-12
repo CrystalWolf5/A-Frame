@@ -1,329 +1,218 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>escena 3</title>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <a-assets>
-        <!-- Compañeros -->
-        <a-asset-item
-          id="chimchar"
-          src="assets/models/chimchar/scene.gltf"
-        ></a-asset-item>
-        <a-asset-item
-          id="piplup"
-          src="assets/models/piplup/scene.gltf"
-        ></a-asset-item>
-        <a-asset-item
-          id="turtwig"
-          src="assets/models/turtwig/scene.gltf"
-        ></a-asset-item>
-        <!-- Enemigos -->
-        <a-asset-item
-          id="fennekin"
-          src="assets/models/fennekin/scene.gltf"
-        ></a-asset-item>
-        <a-asset-item
-          id="gyarados"
-          src="assets/models/gyarados/scene.gltf"
-        ></a-asset-item>
-        <a-asset-item
-          id="litwick"
-          src="assets/models/litwick/scene.gltf"
-        ></a-asset-item>
-        <a-asset-item
-          id="pikachu"
-          src="assets/models/pikachu/scene.gltf"
-        ></a-asset-item>
-      </a-assets>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Museo A-Frame</title>
 
-      <!-- MANDOS VR INTEGRADOS -->
-      <a-entity laser-controls="hand: left" position="0 1.6 8"></a-entity>
-      <a-entity laser-controls="hand: right" position="0 1.6 8"></a-entity>
-      <a-entity cursor="rayOrigin: controller"></a-entity>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.4.0/dist/aframe-extras.min.js"></script>
 
-      <!-- Cámara -->
-<a-entity id="rig" position="0 1.6 8">
+  <script>
+    AFRAME.registerComponent('pokemon-info', {
+      schema: {
+        title: { type: 'string' },
+        type: { type: 'string' },
+        gen: { type: 'string' },
+        desc: { type: 'string' }
+      },
+      init: function () {
+        const panel = document.querySelector('#hudPanel');
+        const title = document.querySelector('#hudTitle');
+        const body = document.querySelector('#hudBody');
 
-  <!-- Cámara VR -->
-  <a-entity camera
-            cursor="rayOrigin: mouse"
-            raycaster="objects: .clickable">
-  </a-entity>
+        this.el.addEventListener('click', () => {
+          const open = panel.getAttribute('visible');
+          if (open && panel.dataset.open === this.el.id) {
+            panel.setAttribute('visible', false);
+            panel.dataset.open = '';
+            return;
+          }
+          title.setAttribute('value', this.data.title);
+          body.setAttribute(
+            'value',
+            `Tipo: ${this.data.type}\nGeneración: ${this.data.gen}\n\n${this.data.desc}`
+          );
+          panel.setAttribute('visible', true);
+          panel.dataset.open = this.el.id;
+        });
+      }
+    });
+  </script>
 
+  <style>
+    body { margin: 0; }
+  </style>
+</head>
+
+<body>
+<a-scene
+  renderer="colorManagement: true; shadows: true"
+  shadow="type: pcfsoft"
+  fog="type: linear; color: #c9c0b4; near: 7; far: 18"
+  background="color: #0b0d12">
+
+  <!-- AUDIO -->
+  <a-entity sound="src: url(./assets/audios/Pokémon.mp3); autoplay: true; loop: true; volume: 0.25"></a-entity>
+
+  <!-- LUCES -->
+  <a-entity light="type: ambient; intensity: 0.32"></a-entity>
+  <a-entity light="type: directional; intensity: 0.35" position="2 6 2" shadow></a-entity>
+
+  <!-- FOCOS -->
+  <a-entity light="type: spot; intensity: 1.5; angle: 26; penumbra: 0.55"
+            position="-3 2.9 -1.6" rotation="-90 0 0" shadow></a-entity>
+  <a-entity light="type: spot; intensity: 1.5; angle: 26; penumbra: 0.55"
+            position="0 2.9 -0.2" rotation="-90 0 0" shadow></a-entity>
+  <a-entity light="type: spot; intensity: 1.5; angle: 26; penumbra: 0.55"
+            position="3.2 2.9 1.6" rotation="-90 0 0" shadow></a-entity>
+  <a-entity light="type: spot; intensity: 1.5; angle: 26; penumbra: 0.55"
+            position="5.4 2.9 -2.2" rotation="-90 0 0" shadow></a-entity>
+
+  <!-- SUELO -->
+  <a-plane position="0 0 0" rotation="-90 0 0"
+           width="14" height="10"
+           color="#2f2f2f"
+           shadow="receive: true"></a-plane>
+
+  <!-- ALFOMBRA -->
+  <a-plane position="0 0.01 -0.3" rotation="-90 0 0"
+           width="5.5" height="7.5"
+           material="src: #alfombra"
+           opacity="0.95"></a-plane>
+
+  <!-- TECHO -->
+  <a-plane position="0 3 0" rotation="90 0 0"
+           width="14" height="10"
+           color="#f1eee7"></a-plane>
+
+  <!-- CÍRCULO TECHO -->
+  <a-circle position="0 2.99 0" rotation="90 0 0"
+            radius="1.2" color="#e2ddd4"></a-circle>
+
+  <!-- PORTAL (AHORA SÍ ENLAZA A TU HTML) -->
+  <a-circle class="clickable"
+            position="0 2.95 0"
+            rotation="90 0 0"
+            radius="0.6"
+            color="#4a90e2"
+            link="href: escena-3.html"></a-circle>
+
+  <!-- PAREDES -->
+  <a-box position="0 1.5 -5" width="14" height="3" depth="0.2" color="#c2ab91"></a-box>
+  <a-box position="0 1.5 5" width="14" height="3" depth="0.2" color="#b99f84"></a-box>
+  <a-box position="-7 1.5 0" width="0.2" height="3" depth="10" color="#c2ab91"></a-box>
+  <a-box position="7 1.5 0" width="0.2" height="3" depth="10" color="#c2ab91"></a-box>
+
+  <!-- ZÓCALO (CORREGIDO, HACIA DENTRO) -->
+  <a-box position="0 0.18 -4.85" width="13.8" height="0.22" depth="0.06" color="#8d6d53"></a-box>
+  <a-box position="0 0.18 4.85"  width="13.8" height="0.22" depth="0.06" color="#8d6d53"></a-box>
+  <a-box position="-6.85 0.18 0" width="0.06" height="0.22" depth="9.8" color="#8d6d53"></a-box>
+  <a-box position="6.85 0.18 0"  width="0.06" height="0.22" depth="9.8" color="#8d6d53"></a-box>
+
+  <!-- ASSETS -->
+  <a-assets>
+    <img id="cuadro1" src="/assets/imagenes/venatan.jpg">
+    <img id="cuadro2" src="/assets/imagenes/cubone.jpg">
+    <img id="cuadro3" src="/assets/imagenes/mona.jpg">
+    <img id="cuadro4" src="/assets/imagenes/grito.jpg">
+    <img id="alfombra" src="/assets/imagenes/alfombra.jpg">
+    <img id="pared-sur" src="/assets/imagenes/muse.jpg">
+
+
+    <a-asset-item id="m1" src="/assets/models/cubone/scene.gltf"></a-asset-item>
+    <a-asset-item id="m2" src="/assets/models/jolteon/scene.gltf"></a-asset-item>
+    <a-asset-item id="m3" src="/assets/models/flareon/scene.gltf"></a-asset-item>
+    <a-asset-item id="m4" src="/assets/models/umbreon/scene.gltf"></a-asset-item>
+    
+  </a-assets>
+
+  <!-- CUADROS -->
+  <a-plane src="#cuadro1" position="-4 1.55 -4.74" width="1.9" height="1.1"></a-plane>
+  <a-plane src="#cuadro2" position="4 1.55 -4.74" width="1.9" height="1.1"></a-plane>
+  <a-plane src="#cuadro3" position="6.74 1.55 -1.8" rotation="0 -90 0" width="1.7" height="1.0"></a-plane>
+  <a-plane src="#cuadro4" position="-6.74 1.55 1.8" rotation="0 90 0" width="1.7" height="1.0"></a-plane>
+
+
+<!-- IMAGEN GRANDE EN LA PARED SUR (LA QUE MIRAS EN LA FOTO) -->
+<a-plane
+  src="#pared-sur"
+  position="0 1.5 4.8"
+  width="13.6"
+  height="2.8"
+  rotation="0 180 0"
+  material="shader: flat">
+</a-plane>
+
+<!-- MARCO FINO -->
+<a-box
+  position="0 1.5 5.02"
+  width="13.8"
+  height="3"
+  depth="0.05"
+  color="#6b4f3a">
+</a-box>
+
+
+  <!-- PEDESTALES -->
+  <a-cylinder position="-3.2 0.35 -1.6" radius="0.5" height="0.7" color="#d7d2c6"></a-cylinder>
+  <a-cylinder position="-0.1 0.35 -0.1" radius="0.5" height="0.7" color="#d7d2c6"></a-cylinder>
+  <a-cylinder position="3.3 0.35 1.6" radius="0.5" height="0.7" color="#d7d2c6"></a-cylinder>
+  <a-cylinder position="5.5 0.35 -2.2" radius="0.5" height="0.7" color="#d7d2c6"></a-cylinder>
+
+  <!-- POKÉMON -->
+  <a-entity id="cubone" class="clickable" gltf-model="#m1"
+            position="-3.2 0.7 -1.6"
+            pokemon-info="title: CUBONE; type: Tierra; desc: Lleva el craneo de su madre 
+            y es muy mono."
+            shadow></a-entity>
+
+  <a-entity id="jolteon" class="clickable" gltf-model="#m2"
+            position="-0.1 0.7 -0.1" scale="0.5 0.5 0.5"
+            pokemon-info="title: JOLTEON; type: Eléctrico;  desc: Velocidad eléctrica pura y una gran evolucion 
+            de eevee."
+            shadow></a-entity>
+
+  <a-entity id="flareon" class="clickable" gltf-model="#m3"
+            position="3.3 0.7 1.6" scale="0.5 0.5 0.5"
+            pokemon-info="title: FLAREON; type: Fuego; desc: Almacena calor extremo y es 
+            otra evolucion de eevee."
+            shadow></a-entity>
+
+  <a-entity id="umbreon" class="clickable" gltf-model="#m4"
+            position="5.5 0.7 -2.2" scale="1 1 1"
+            pokemon-info="title: UMBREON; type: Sombra; desc: Disenio bonito y es otra evolucion de eevee."
+            shadow></a-entity>
+
+  <!-- JUGADOR -->
+  <a-entity teleport-controls="cameraRig: #player; teleportOrigin: #camera"></a-entity>
+
+  <a-entity id="player"
+            movement-controls="speed: 0.02"
+            kinematic-body
+            position="0 -0.8 4">
+    <a-camera look-controls wasd-controls="acceleration: 10">
+      <a-cursor raycaster="objects: .clickable"
+                material="color: #000; shader: flat"></a-cursor>
+
+      <!-- HUD -->
+      <a-entity id="hudPanel" visible="false" data-open="" position="0 -0.15 -1.1">
+        <a-plane width="1.6" height="1"
+                material="color: #efe7db; opacity: 0.93; transparent: true"></a-plane>
+        <a-text id="hudTitle" position="0 0.32 0.01"
+                align="center" width="2" color="#2a2018"></a-text>
+        <a-text id="hudBody" position="0 0 0.01"
+                align="center" width="1.8" color="#2a2018"></a-text>
+      </a-entity>
+    </a-camera>
+    <a-entity camera look-controls>
+  <a-entity laser-controls="hand: right"></a-entity>
+  <a-entity laser-controls="hand: left"></a-entity>
 </a-entity>
 
-      <a-sky color="#ECECEC"></a-sky>
-      <a-plane
-        position="0 0 0"
-        rotation="-90 0 0"
-        width="20"
-        height="20"
-        color="#e0e0e0"
-      ></a-plane>
+  </a-entity>
 
-      <!-- Mensaje -->
-      <a-text
-        id="mensaje"
-        value=""
-        position="0 4 -2"
-        aling="center"
-        color="black"
-      ></a-text>
-
-      <!-- Barras de vida -->
-      <a-plane
-        id="vidaJugador"
-        position="-2 3 5"
-        width="2"
-        height="0.3"
-        color="green"
-      ></a-plane>
-      <a-plane
-        id="vidaEnemigo"
-        position="2 3 -4"
-        width="2"
-        height="0.3"
-        color="red"
-      ></a-plane>
-
-      <!-- Pokémon -->
-      <a-entity id="pokemon"></a-entity>
-      <a-entity id="enemigo"></a-entity>
-
-      <!-- Botón inicial "Atacar" -->
-      <a-box
-        id="btnAtacar"
-        class="clickable"
-        color="blue"
-        position="2 1 4"
-        depth="0.2"
-        height="0.5"
-        width="1"
-      ></a-box>
-      <a-text
-        id="txtAtacar"
-        value="Atacar"
-        position="1.7 1 4.1"
-        aling="center"
-      ></a-text>
-
-      <!-- Botones de ataque (ocultos al inicio) -->
-      <a-box
-        id="ataque1"
-        class="clickable"
-        color="orange"
-        position="2 2 4"
-        depth="0.2"
-        height="0.5"
-        width="1"
-        visible="false"
-      ></a-box>
-      <a-text
-        id="txtAtaque1"
-        value="Ataque 1"
-        position="1.57 2 4.1"
-        aling="center"
-        visible="false"
-      ></a-text>
-
-      <a-box
-        id="ataque2"
-        class="clickable"
-        color="yellow"
-        position="2 0.5 4"
-        depth="0.2"
-        height="0.5"
-        width="1"
-        visible="false"
-      ></a-box>
-      <a-text
-        id="txtAtaque2"
-        value="Ataque 2"
-        position="2 0.5 4.1"
-        align="center"
-        visible="false"
-      ></a-text>
-
-      <script>
-        // Recuperar elección
-        const elegido = (
-          localStorage.getItem("pokemonElegido") || ""
-        ).toLowerCase();
-        const contenedor = document.querySelector("#pokemon");
-
-        if (elegido === "chimchar") {
-          contenedor.setAttribute("gltf-model", "#chimchar");
-          contenedor.setAttribute("position", "0 0 5");
-          contenedor.setAttribute("scale", "0.3 0.3 0.3");
-          contenedor.setAttribute("rotation", "0 180 0");
-        } else if (elegido === "piplup") {
-          contenedor.setAttribute("gltf-model", "#piplup");
-          contenedor.setAttribute("position", "0 0 5");
-          contenedor.setAttribute("scale", "0.3 0.3 0.3");
-          contenedor.setAttribute("rotation", "0 180 0");
-        } else if (elegido === "turtwig") {
-          contenedor.setAttribute("gltf-model", "#turtwig");
-          contenedor.setAttribute("position", "0 0 5");
-          contenedor.setAttribute("scale", "0.3 0.3 0.3");
-          contenedor.setAttribute("rotation", "0 180 0");
-        }
-
-        // Ataques según el Pokémon elegido
-        let ataque1Nombre = "";
-        let ataque2Nombre = "";
-
-        if (elegido === "chimchar") {
-        ataque1Nombre = "Lanzallamas";
-        ataque2Nombre = "Ascuas";
-        }
-
-        if (elegido === "piplup") {
-        ataque1Nombre = "Picotazo";
-        ataque2Nombre = "Pistola Agua";
-        }
-
-        if (elegido === "turtwig") {
-        ataque1Nombre = "Placaje";
-        ataque2Nombre = "Hoja Afilada";
-        }
-
-        // Lista de enemigos
-        const enemigos = [
-        {
-            id: "#pikachu",
-            scale: "0.03 0.03 0.03",
-            rotation: "0 0 0",
-            position: "0 0 -5",
-        },
-        {
-            id: "#litwick",
-            scale: "0.3 0.3 0.3",
-            rotation: "0 0 0",
-            position: "0 0 -5",
-        },
-        {
-            id: "#gyarados",
-            scale: "0.7 0.7 0.7",
-            rotation: "0 90 0",
-            position: "0 2 -5",
-        },
-        {
-            id: "#fennekin",
-            scale: "0.9 0.9 0.9",
-            rotation: "0 0 0",
-            position: "0 0 -5",
-        },
-        ];
-        const enemigoElegido =
-          enemigos[Math.floor(Math.random() * enemigos.length)];
-        const enemigo = document.querySelector("#enemigo");
-        enemigo.setAttribute("gltf-model", enemigoElegido.id);
-        enemigo.setAttribute("position", enemigoElegido.position);
-        enemigo.setAttribute("scale", enemigoElegido.scale);
-        enemigo.setAttribute("rotation", enemigoElegido.rotation);
-
-        // Sistema de vida
-        let vidaJugador = 100;
-        let vidaEnemigo = 100;
-
-        function actualizarBarra(id, vida) {
-        const barra = document.querySelector(id);
-        const anchoMax = 2;
-          const anchoActual = (vida / 100) * anchoMax;
-        barra.setAttribute("width", anchoActual);
-
-        if (id === "#vidaJugador") {
-            barra.setAttribute(
-            "position",
-            `${-2 - (anchoMax - anchoActual) / 2} 3 -4`
-            );
-        } else {
-            barra.setAttribute(
-            "position",
-            `${2 - (anchoMax - anchoActual) / 2} 3 -4`
-            );
-        }
-
-        if (vida > 60) barra.setAttribute("color", "green");
-        else if (vida > 30) barra.setAttribute("color", "yellow");
-        else barra.setAttribute("color", "red");
-        }
-
-        function ataqueJugador(dano) {
-        if (vidaEnemigo === 0) return;
-
-        vidaEnemigo -= dano;
-        if (vidaEnemigo < 0) vidaEnemigo = 0;
-        actualizarBarra("#vidaEnemigo", vidaEnemigo);
-
-        if (vidaEnemigo === 0) {
-            document
-            .querySelector("#mensaje")
-            .setAttribute("value", "¡Has ganado!");
-        } else {
-            setTimeout(ataqueEnemigo, 1000);
-        }
-        }
-
-        function ataqueEnemigo() {
-          const dano = Math.floor(Math.random() * 20) + 10;
-        document
-            .querySelector("#mensaje")
-            .setAttribute(
-            "value",
-            "¡El enemigo te atacó e hizo " + dano + " de daño!"
-            );
-        vidaJugador -= dano;
-        if (vidaJugador < 0) vidaJugador = 0;
-        actualizarBarra("#vidaJugador", vidaJugador);
-
-        if (vidaJugador === 0) {
-            document
-            .querySelector("#mensaje")
-            .setAttribute("value", "Has perdido...");
-        }
-        }
-
-        // Inicializar barras
-        actualizarBarra("#vidaJugador", vidaJugador);
-        actualizarBarra("#vidaEnemigo", vidaEnemigo);
-
-        // Mostrar botones de ataque al pulsar "Atacar"
-        // Mostrar botones de ataque al pulsar "Atacar"
-        document.querySelector("#btnAtacar").addEventListener("click", () => {
-        document.querySelector("#btnAtacar").setAttribute("visible", "false");
-          document.querySelector("#txtAtacar").setAttribute("visible", "false"); // ocultar texto también
-
-        document.querySelector("#ataque1").addEventListener("click", () => {
-            document
-            .querySelector("#mensaje")
-            .setAttribute("value", "¡Usaste " + ataque1Nombre + "!");
-            ataqueJugador(20);
-        });
-
-        document.querySelector("#ataque2").addEventListener("click", () => {
-            document
-            .querySelector("#mensaje")
-            .setAttribute("value", "¡Usaste " + ataque2Nombre + "!");
-            ataqueJugador(30);
-        });
-
-        document.querySelector("#ataque1").setAttribute("visible", "true");
-        document.querySelector("#txtAtaque1").setAttribute("visible", "true");
-        document.querySelector("#ataque2").setAttribute("visible", "true");
-        document.querySelector("#txtAtaque2").setAttribute("visible", "true");
-        });
-    </script>
-    </a-scene>
+</a-scene>
 </body>
 </html>
-
-
-
-
 
