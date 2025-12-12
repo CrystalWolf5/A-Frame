@@ -1,19 +1,16 @@
-
-VER ESTE README EN LA PESTAÑA CODIGO
-
 Este trabajo consiste en una experiencia basada en Pokémon. Contenido:
 
-|------------------------------------------------------------------------------|
-| Un Índex desde donde entrar a la experiencia.                                |
-|                                                                              |
-| Un video introductorio como ejemplo de una aventura Pokémon.                 |
-|                                                                              |
-| Un laboratorio donde elegir uno de los 3 Pokémon (Agua, Fuego, Planta).      |
-|                                                                              |
-| Un mini museo donde tenemos algunos Pokémon y podemos ver sus descripciones. |
-|                                                                              |
-| Un pequeño combate Pokémon donde puedas ver a los Pokémon en acción.         |
-|------------------------------------------------------------------------------|
+
+Un Índex desde donde entrar a la experiencia.                                
+------------------------------------------------------------------------------
+Un video introductorio como ejemplo de una aventura Pokémon.                 
+------------------------------------------------------------------------------
+Un laboratorio donde elegir uno de los 3 Pokémon (Agua, Fuego, Planta).     
+------------------------------------------------------------------------------
+Un mini museo donde tenemos algunos Pokémon y podemos ver sus descripciones. 
+------------------------------------------------------------------------------
+Un pequeño combate Pokémon donde puedas ver a los Pokémon en acción.
+------------------------------------------------------------------------------
 
 Los creadores de este trabajo son: [Vicente, Sami y Elena].
 
