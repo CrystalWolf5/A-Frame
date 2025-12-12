@@ -21,21 +21,21 @@
   </a-assets>
 
 
-    <!-- MANDOS VR INTEGRADOS -->
+<a-scene xr-mode-ui="enabled: true" webxr="optionalFeatures: [ 'local-floor', 'bounded-floor', 'hand-tracking', 'layers' ]">
 
-  <a-entity cursor="rayOrigin: controller"></a-entity>
+  <a-entity id="rig" position="0 1.6 8">
 
-  <!-- Cámara -->
-<a-entity id="rig" position="0 1.6 8">
+    <!-- Cámara VR -->
+    <a-entity camera
+              cursor="rayOrigin: controller"
+              raycaster="objects: .clickable">
+    </a-entity>
 
-  <!-- Cámara VR -->
-  <a-entity camera
-            cursor="rayOrigin: mouse"
-            raycaster="objects: .clickable">
-  </a-entity>
+    <!-- ✅ Mandos VR (correcto) -->
     <a-entity laser-controls="hand: left"></a-entity>
-  <a-entity laser-controls="hand: right"></a-entity>
-</a-entity>
+    <a-entity laser-controls="hand: right"></a-entity>
+
+  </a-entity>
 
 
 
@@ -200,6 +200,7 @@ document.querySelector('#ataque2').addEventListener('click', () => {
 </body>
 
 </html>
+
 
 
 
