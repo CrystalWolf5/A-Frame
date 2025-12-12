@@ -7,7 +7,8 @@
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 </head>
 <body>
-<a-scene xr-mode-ui="enabled: true" webxr="optionalFeatures: [ 'local-floor', 'bounded-floor', 'hand-tracking', 'layers' ]">
+<a-scene xr-mode-ui="enabled: true" webxr="optionalFeatures: local-floor, bounded-floor, hand-tracking, layers">
+
   <a-assets>
     <!-- Compañeros -->
     <a-asset-item id="chimchar" src="assets/models/chimchar/scene.gltf"></a-asset-item>
@@ -199,6 +200,7 @@ document.querySelector('#ataque2').addEventListener('click', () => {
 </body>
 
 </html>
+
 
 
 
