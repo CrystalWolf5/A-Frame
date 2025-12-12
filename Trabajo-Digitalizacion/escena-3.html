@@ -34,7 +34,8 @@
               raycaster="objects: .clickable"
               cursor="fuse: false"></a-entity>
   </a-entity>
-
+   <audio id="bgMusic" src="assets/sounds/combate.mp3" preload="auto"></audio>
+  <a-entity sound="src: url(./assets/sounds/combate.mp3); autoplay: true; loop: true; volume: 1"></a-entity>
 
   <a-sky color="#ECECEC"></a-sky>
   <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#e0e0e0"></a-plane>
@@ -196,3 +197,4 @@ document.querySelector('#ataque2').addEventListener('click', () => {
 </a-scene>
 </body>
 </html>
+
