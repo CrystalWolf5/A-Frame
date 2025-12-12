@@ -1,3 +1,6 @@
+
+VER ESTE README EN LA PESTAÑA CODIGO
+
 Este trabajo consiste en una experiencia basada en Pokémon. Contenido:
 
 |------------------------------------------------------------------------------|
