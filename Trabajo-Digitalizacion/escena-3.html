@@ -318,8 +318,39 @@
         document.querySelector("#ataque2").setAttribute("visible", "true");
         document.querySelector("#txtAtaque2").setAttribute("visible", "true");
         });
+
+
+          // Recuperar elección
+  const elegido = (localStorage.getItem("pokemonElegido") || "").toLowerCase();
+  const contenedor = document.querySelector("#pokemon");
+
+  // Posición común de los Pokémon
+  const posPokemon = {x:0, y:0, z:5};
+
+  if (elegido === "chimchar") {
+    contenedor.setAttribute("gltf-model", "#chimchar");
+  } else if (elegido === "piplup") {
+    contenedor.setAttribute("gltf-model", "#piplup");
+  } else if (elegido === "turtwig") {
+    contenedor.setAttribute("gltf-model", "#turtwig");
+  }
+
+  contenedor.setAttribute("position", `${posPokemon.x} ${posPokemon.y} ${posPokemon.z}`);
+  contenedor.setAttribute("scale", "0.3 0.3 0.3");
+  contenedor.setAttribute("rotation", "0 180 0");
+
+  // --- Colocar cámara detrás del Pokémon elegido ---
+  const rig = document.querySelector("#rig");
+
+  // Distancia detrás del Pokémon
+  const distanciaDetras = 3;
+
+  // Como el Pokémon está en z=5 mirando hacia la cámara (rotación 180),
+  // ponemos la cámara detrás en z mayor (por ejemplo z=8)
+  rig.setAttribute("position", `${posPokemon.x} ${posPokemon.y + 1.6} ${posPokemon.z + distanciaDetras}`);
     </script>
     </a-scene>
 </body>
 </html>
+
 
