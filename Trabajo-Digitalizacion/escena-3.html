@@ -150,7 +150,7 @@ if (elegido === "turtwig") {
       actualizarBarra('#vidaEnemigo', vidaEnemigo);
 
       if (vidaEnemigo === 0) {
-        document.querySelector('#mensaje').setAttribute('value', '¡Has ganado!');
+        document.querySelector('#mensaje').setAttribute('value', '¡El pokemon enemigo se ha debilitado!');
       } else {
         setTimeout(ataqueEnemigo, 1000);
       }
@@ -158,13 +158,13 @@ if (elegido === "turtwig") {
 
     function ataqueEnemigo() {
       const dano = Math.floor(Math.random() * 20) + 10;
-      document.querySelector('#mensaje').setAttribute('value', '¡El enemigo te atacó e hizo ' + dano + ' de daño!');
+      document.querySelector('#mensaje').setAttribute('value', '¡El pokemon enemigo ataca');
       vidaJugador -= dano;
       if (vidaJugador < 0) vidaJugador = 0;
       actualizarBarra('#vidaJugador', vidaJugador);
 
       if (vidaJugador === 0) {
-        document.querySelector('#mensaje').setAttribute('value', 'Has perdido...');
+        document.querySelector('#mensaje').setAttribute('value', elegido.charAt(0).toUpperCase() + elegido.slice(1) + ' se ha debilitado...');
       }
     }
 
@@ -199,3 +199,4 @@ document.querySelector('#ataque2').addEventListener('click', () => {
 </body>
 
 </html>
+
