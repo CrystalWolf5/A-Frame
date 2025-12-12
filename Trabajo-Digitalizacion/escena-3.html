@@ -20,25 +20,22 @@
     <a-asset-item id="pikachu" src="assets/models/pikachu/scene.gltf"></a-asset-item>
   </a-assets>
 
-<a-entity id="rig" position="0 1.6 8">
+<a-scene xr-mode-ui="enabled: true" webxr="optionalFeatures: [ 'local-floor', 'bounded-floor', 'hand-tracking', 'layers' ]">
 
-  <!-- Cámara VR -->
-  <a-entity camera></a-entity>
+  <!-- ✅ Necesario para que los mandos funcionen -->
+  <a-entity webxr-input-profiles></a-entity>
 
-  <!-- Mandos VR con raycaster y cursor -->
-  <a-entity laser-controls="hand: left"
-            raycaster="objects: .clickable"
-            cursor="fuse: false">
+  <a-entity id="rig" position="0 1.6 8">
+    <a-entity camera></a-entity>
+
+    <a-entity laser-controls="hand: left"
+              raycaster="objects: .clickable"
+              cursor="fuse: false"></a-entity>
+
+    <a-entity laser-controls="hand: right"
+              raycaster="objects: .clickable"
+              cursor="fuse: false"></a-entity>
   </a-entity>
-
-  <a-entity laser-controls="hand: right"
-            raycaster="objects: .clickable"
-            cursor="fuse: false">
-  </a-entity>
-
-</a-entity>
-
-
 
 
   <a-sky color="#ECECEC"></a-sky>
@@ -202,6 +199,7 @@ document.querySelector('#ataque2').addEventListener('click', () => {
 </body>
 
 </html>
+
 
 
 
