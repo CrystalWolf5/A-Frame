@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Museo A-Frame</title>
+
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.4.0/dist/aframe-extras.min.js"></script>
+
+  <script>
+    AFRAME.registerComponent('pokemon-info', {
+      schema: {
+        title: { type: 'string' },
+        type: { type: 'string' },
+        gen: { type: 'string' },
+        desc: { type: 'string' }
+      },
+      init: function () {
+        const panel = document.querySelector('#hudPanel');
+        const title = document.querySelector('#hudTitle');
+        const body = document.querySelector('#hudBody');
+
+        this.el.addEventListener('click', () => {
+          const open = panel.getAttribute('visible');
+          if (open && panel.dataset.open === this.el.id) {
+            panel.setAttribute('visible', false);
+            panel.dataset.open = '';
+            return;
+          }
+          title.setAttribute('value', this.data.title);
+          body.setAttribute(
+            'value',
+            `Tipo: ${this.data.type}\nGeneración: ${this.data.gen}\n\n${this.data.desc}`
+          );
+          panel.setAttribute('visible', true);
+          panel.dataset.open = this.el.id;
+        });
+      }
+    });
+  </script>
+
+  <style>
+    body { margin: 0; }
+  </style>
+</head>
+
+<body>
+<a-scene
+  renderer="colorManagement: true; shadows: true"
+  shadow="type: pcfsoft"
+  fog="type: linear; color: #c9c0b4; near: 7; far: 18"
+  background="color: #0b0d12">
+
+  <!-- AUDIO -->
+  <a-entity sound="src: url(./assets/audios/Pokémon.mp3); autoplay: true; loop: true; volume: 0.25"></a-entity>
+
+  <!-- LUCES -->
+  <a-entity light="type: ambient; intensity: 0.32"></a-entity>
+  <a-entity light="type: directional; intensity: 0.35" position="2 6 2" shadow></a-entity>
+
+  <!-- FOCOS -->
+  <a-entity light="type: spot; intensity: 1.5; angle: 26; penumbra: 0.55"
+            position="-3 2.9 -1.6" rotation="-90 0 0" shadow></a-entity>
+  <a-entity light="type: spot; intensity: 1.5; angle: 26; penumbra: 0.55"
+            position="0 2.9 -0.2" rotation="-90 0 0" shadow></a-entity>
+  <a-entity light="type: spot; intensity: 1.5; angle: 26; penumbra: 0.55"
+            position="3.2 2.9 1.6" rotation="-90 0 0" shadow></a-entity>
+  <a-entity light="type: spot; intensity: 1.5; angle: 26; penumbra: 0.55"
+            position="5.4 2.9 -2.2" rotation="-90 0 0" shadow></a-entity>
+
+  <!-- SUELO -->
+  <a-plane position="0 0 0" rotation="-90 0 0"
+           width="14" height="10"
+           color="#2f2f2f"
+           shadow="receive: true"></a-plane>
+
+  <!-- ALFOMBRA -->
+  <a-plane position="0 0.01 -0.3" rotation="-90 0 0"
+           width="5.5" height="7.5"
+           material="src: #alfombra"
+           opacity="0.95"></a-plane>
+
+  <!-- TECHO -->
+  <a-plane position="0 3 0" rotation="90 0 0"
+           width="14" height="10"
+           color="#f1eee7"></a-plane>
+
+  <!-- CÍRCULO TECHO -->
+  <a-circle position="0 2.99 0" rotation="90 0 0"
+            radius="1.2" color="#e2ddd4"></a-circle>
+
+  <!-- PORTAL (AHORA SÍ ENLAZA A TU HTML) -->
+  <a-circle class="clickable"
+            position="0 2.95 0"
+            rotation="90 0 0"
+            radius="0.6"
+            color="#4a90e2"
+            link="href: escena-3.html"></a-circle>
+
+  <!-- PAREDES -->
+  <a-box position="0 1.5 -5" width="14" height="3" depth="0.2" color="#c2ab91"></a-box>
+  <a-box position="0 1.5 5" width="14" height="3" depth="0.2" color="#b99f84"></a-box>
+  <a-box position="-7 1.5 0" width="0.2" height="3" depth="10" color="#c2ab91"></a-box>
+  <a-box position="7 1.5 0" width="0.2" height="3" depth="10" color="#c2ab91"></a-box>
+
+  <!-- ZÓCALO (CORREGIDO, HACIA DENTRO) -->
+  <a-box position="0 0.18 -4.85" width="13.8" height="0.22" depth="0.06" color="#8d6d53"></a-box>
+  <a-box position="0 0.18 4.85"  width="13.8" height="0.22" depth="0.06" color="#8d6d53"></a-box>
+  <a-box position="-6.85 0.18 0" width="0.06" height="0.22" depth="9.8" color="#8d6d53"></a-box>
+  <a-box position="6.85 0.18 0"  width="0.06" height="0.22" depth="9.8" color="#8d6d53"></a-box>
+
+  <!-- ASSETS -->
+  <a-assets>
+    <img id="cuadro1" src="/assets/imagenes/venatan.jpg">
+    <img id="cuadro2" src="/assets/imagenes/cubone.jpg">
+    <img id="cuadro3" src="/assets/imagenes/mona.jpg">
+    <img id="cuadro4" src="/assets/imagenes/grito.jpg">
+    <img id="alfombra" src="/assets/imagenes/alfombra.jpg">
+    <img id="pared-sur" src="/assets/imagenes/muse.jpg">
+
+
+    <a-asset-item id="m1" src="/assets/models/cubone/scene.gltf"></a-asset-item>
+    <a-asset-item id="m2" src="/assets/models/jolteon/scene.gltf"></a-asset-item>
+    <a-asset-item id="m3" src="/assets/models/flareon/scene.gltf"></a-asset-item>
+    <a-asset-item id="m4" src="/assets/models/umbreon/scene.gltf"></a-asset-item>
+    
+  </a-assets>
+
+  <!-- CUADROS -->
+  <a-plane src="#cuadro1" position="-4 1.55 -4.74" width="1.9" height="1.1"></a-plane>
+  <a-plane src="#cuadro2" position="4 1.55 -4.74" width="1.9" height="1.1"></a-plane>
+  <a-plane src="#cuadro3" position="6.74 1.55 -1.8" rotation="0 -90 0" width="1.7" height="1.0"></a-plane>
+  <a-plane src="#cuadro4" position="-6.74 1.55 1.8" rotation="0 90 0" width="1.7" height="1.0"></a-plane>
+
+
+<!-- IMAGEN GRANDE EN LA PARED SUR (LA QUE MIRAS EN LA FOTO) -->
+<a-plane
+  src="#pared-sur"
+  position="0 1.5 4.8"
+  width="13.6"
+  height="2.8"
+  rotation="0 180 0"
+  material="shader: flat">
+</a-plane>
+
+<!-- MARCO FINO -->
+<a-box
+  position="0 1.5 5.02"
+  width="13.8"
+  height="3"
+  depth="0.05"
+  color="#6b4f3a">
+</a-box>
+
+
+  <!-- PEDESTALES -->
+  <a-cylinder position="-3.2 0.35 -1.6" radius="0.5" height="0.7" color="#d7d2c6"></a-cylinder>
+  <a-cylinder position="-0.1 0.35 -0.1" radius="0.5" height="0.7" color="#d7d2c6"></a-cylinder>
+  <a-cylinder position="3.3 0.35 1.6" radius="0.5" height="0.7" color="#d7d2c6"></a-cylinder>
+  <a-cylinder position="5.5 0.35 -2.2" radius="0.5" height="0.7" color="#d7d2c6"></a-cylinder>
+
+  <!-- POKÉMON -->
+  <a-entity id="cubone" class="clickable" gltf-model="#m1"
+            position="-3.2 0.7 -1.6"
+            pokemon-info="title: CUBONE; type: Tierra; desc: Lleva el craneo de su madre 
+            y es muy mono."
+            shadow></a-entity>
+
+  <a-entity id="jolteon" class="clickable" gltf-model="#m2"
+            position="-0.1 0.7 -0.1" scale="0.5 0.5 0.5"
+            pokemon-info="title: JOLTEON; type: Eléctrico;  desc: Velocidad eléctrica pura y una gran evolucion 
+            de eevee."
+            shadow></a-entity>
+
+  <a-entity id="flareon" class="clickable" gltf-model="#m3"
+            position="3.3 0.7 1.6" scale="0.5 0.5 0.5"
+            pokemon-info="title: FLAREON; type: Fuego; desc: Almacena calor extremo y es 
+            otra evolucion de eevee."
+            shadow></a-entity>
+
+  <a-entity id="umbreon" class="clickable" gltf-model="#m4"
+            position="5.5 0.7 -2.2" scale="1 1 1"
+            pokemon-info="title: UMBREON; type: Sombra; desc: Disenio bonito y es otra evolucion de eevee."
+            shadow></a-entity>
+
+  <!-- JUGADOR -->
+  <a-entity teleport-controls="cameraRig: #player; teleportOrigin: #camera"></a-entity>
+
+  <a-entity id="player"
+            movement-controls="speed: 0.02"
+            kinematic-body
+            position="0 -0.8 4">
+    <a-camera look-controls wasd-controls="acceleration: 10">
+      <a-cursor raycaster="objects: .clickable"
+                material="color: #000; shader: flat"></a-cursor>
+
+      <!-- HUD -->
+      <a-entity id="hudPanel" visible="false" data-open="" position="0 -0.15 -1.1">
+        <a-plane width="1.6" height="1"
+                material="color: #efe7db; opacity: 0.93; transparent: true"></a-plane>
+        <a-text id="hudTitle" position="0 0.32 0.01"
+                align="center" width="2" color="#2a2018"></a-text>
+        <a-text id="hudBody" position="0 0 0.01"
+                align="center" width="1.8" color="#2a2018"></a-text>
+      </a-entity>
+    </a-camera>
+    <a-entity camera look-controls>
+  <a-entity laser-controls="hand: right"></a-entity>
+  <a-entity laser-controls="hand: left"></a-entity>
+</a-entity>
+
+  </a-entity>
+
+</a-scene>
+</body>
+</html>

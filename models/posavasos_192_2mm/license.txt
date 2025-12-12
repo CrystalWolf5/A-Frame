@@ -1,0 +1,11 @@
+Model Information:
+* title:	Posavasos 192 2mm
+* source:	https://sketchfab.com/3d-models/posavasos-192-2mm-fe9b4250161d486aad88cea5b3fcd221
+* author:	pelandintecno (https://sketchfab.com/pelandintecno)
+
+Model License:
+* license type:	CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions must have the same license.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Posavasos 192 2mm" (https://sketchfab.com/3d-models/posavasos-192-2mm-fe9b4250161d486aad88cea5b3fcd221) by pelandintecno (https://sketchfab.com/pelandintecno) licensed under CC-BY-NC-SA-4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
